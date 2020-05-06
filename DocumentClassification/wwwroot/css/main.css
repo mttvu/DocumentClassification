@@ -1,0 +1,26 @@
+﻿body {
+    margin: 40px;
+}
+
+.button {
+    background-color: #444;
+    color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    font-size: 150%;
+}
+    .button:hover {
+        color: #fff;
+        background-color: lightslategray;
+        text-decoration: none;
+    }
+
+.wrapper {
+    margin: 0 auto; 
+    width: 800px;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(3, 200px);
+    grid-template-rows: 100px 100px 100px;
+    grid-auto-flow: row;
+}

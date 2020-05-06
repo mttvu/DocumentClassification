@@ -1,0 +1,15 @@
+﻿@model IEnumerable<DocumentClassification.Models.Category>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="wrapper">
+        @foreach (var item in Model)
+        {
+            <a asp-controller="Documents"
+               asp-action="Index"
+               asp-route-categoryId="@item.Id"
+               class="button">@item.Name</a>
+        }
+    </div>
+
