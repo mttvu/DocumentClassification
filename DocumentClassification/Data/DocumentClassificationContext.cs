@@ -16,15 +16,9 @@ namespace DocumentClassification.Models
         public DbSet<Category> Category { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>()
-                .HasMany(c => c.Documents)
-                .WithOne(d => d.Category)
-                .HasForeignKey(d => d.CategoryId);
 
             modelBuilder.Entity<Document>()
-                .HasOne(d => d.Category)
-                .WithMany(c => c.Documents)
-                .HasForeignKey(d => d.CategoryId);
+                .HasOne(d => d.Category);
         }
 
 

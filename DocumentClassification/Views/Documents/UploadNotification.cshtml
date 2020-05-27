@@ -1,0 +1,30 @@
+﻿@model IEnumerable<DocumentClassification.Models.Document>
+@{
+    ViewData["Title"] = "UploadNotification";
+}
+
+<h1>Uploaded Documents</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+
+                <td>
+                    @item.Category.Name
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

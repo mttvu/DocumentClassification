@@ -12,6 +12,7 @@ using DocumentClassification.Services;
 using DocumentClassification.Services.Classification;
 using System.Diagnostics;
 using DocumentClassification.Services.Document;
+using Newtonsoft.Json;
 
 namespace DocumentClassification.Controllers
 {
@@ -25,7 +26,7 @@ namespace DocumentClassification.Controllers
         }
 
         public IActionResult Index(int categoryId)
-        {          
+        {
             return View(_documentService.GetByCategory(categoryId));
         }
 
@@ -63,12 +64,22 @@ namespace DocumentClassification.Controllers
             {
                 if (Request.Form.Files != null)
                 {
-                    await _documentService.AddFilesAsync(Request.Form.Files);
+                    var documents = await _documentService.AddFilesAsync(Request.Form.Files);
+                    foreach (var item in documents)
+                    {
+                        item.File = null;
+                    }
+                    TempData["UploadedDocuments"] = JsonConvert.SerializeObject(documents);
+                    return RedirectToAction("ShowUpload");
                 }
-
-                return RedirectToAction("Index", "Home");
             }
             return View();
+        }
+
+        public IActionResult ShowUpload() 
+        {
+            var documents = JsonConvert.DeserializeObject<IEnumerable<Document>>((string)TempData["UploadedDocuments"]);
+            return View("UploadNotification", documents);
         }
 
         // GET: Documents/Delete/5
@@ -95,6 +106,12 @@ namespace DocumentClassification.Controllers
         {
             _documentService.Delete(id);
             return RedirectToAction("Index", "Home");
+        }
+
+        [ActionName("PredictedCategory")]
+        public IActionResult ShowPredictedCategories(List<Document> documents)
+        {
+            return View(documents);
         }
 
     }

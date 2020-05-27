@@ -17,14 +17,17 @@ namespace DocumentClassification.Services.Document
         {
             _classificationService = classificationService;
         }
-        public async Task AddFilesAsync(IFormFileCollection files)
+        public async Task<IEnumerable<Models.Document>> AddFilesAsync(IFormFileCollection files)
         {
+            var documents = new List<Models.Document>();
             foreach (var file in files)
             {
                 var document = await CreateDocumentAsync(file);
                 Context.Add(document);
+                documents.Add(document);
             }
             Context.SaveChanges();
+            return documents;
         }
 
         public async Task<Models.Document> CreateDocumentAsync(IFormFile file)

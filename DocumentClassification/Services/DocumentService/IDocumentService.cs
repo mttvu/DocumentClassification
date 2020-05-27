@@ -9,7 +9,7 @@ namespace DocumentClassification.Services.Document
 {
     public interface IDocumentService : IBaseService<Models.Document>
     {
-        Task AddFilesAsync(IFormFileCollection files);
+        Task<IEnumerable<Models.Document>> AddFilesAsync(IFormFileCollection files);
         IEnumerable<Models.Document> GetByCategory(int category);
         Task<Models.Document> CreateDocumentAsync(IFormFile file);
     }
